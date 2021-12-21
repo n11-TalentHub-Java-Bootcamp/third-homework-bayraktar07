@@ -37,7 +37,7 @@ public class ProductController {
         if(productDto.getId() != null) {
             return ResponseEntity.created(uri).build();
         }
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.badRequest().body("Something went wrong..");
     }
 
     @PutMapping
@@ -51,15 +51,15 @@ public class ProductController {
         if(productDto.getId() != null) {
             return ResponseEntity.created(uri).build();
         }
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.badRequest().body("Something went wrong..");
     }
 
     @DeleteMapping
-    public ResponseEntity<Object> deleteProduct(@RequestParam String id) {
-        Long deleted = productService.deleteProductById(id);
-        if(deleted > 0) {
-            return ResponseEntity.ok("Entry " + id + " deleted.");
+    public ResponseEntity<Object> deleteProductById(@RequestParam String id) {
+        Long deletedCount = productService.deleteProductById(id);
+        if(deletedCount > 0) {
+            return ResponseEntity.ok("ID: " + id + "\n " + deletedCount + " entry found and deleted.");
         }
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.notFound().header("message", "Entry " + id + " does not exist.").build();
     }
 }

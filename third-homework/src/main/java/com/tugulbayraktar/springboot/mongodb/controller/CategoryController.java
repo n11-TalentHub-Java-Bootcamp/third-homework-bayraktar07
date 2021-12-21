@@ -19,19 +19,19 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping("")
-    public List<CategoryDto> findAll () {
+    public List<CategoryDto> findAll() {
         return categoryService.findAll();
     }
 
     @GetMapping("{id}")
-    public CategoryDto findById (@PathVariable String id) {
+    public CategoryDto findById(@PathVariable String id) {
         return categoryService.findById(id);
     }
 
     @PostMapping
     public ResponseEntity<Object> insertCategory(@Valid @RequestBody CategoryDto categoryDto) {
         categoryDto = categoryService.insertCategory(categoryDto);
-        if(categoryDto != null) {
+        if (categoryDto != null) {
             URI uri = ServletUriComponentsBuilder
                     .fromCurrentRequest()
                     .path("{id}")
@@ -39,15 +39,15 @@ public class CategoryController {
                     .toUri();
             return ResponseEntity.created(uri).build();
         }
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.badRequest().body("Something went wrong..");
     }
 
     @DeleteMapping
-    public ResponseEntity<Object> deleteCategoryById (@RequestParam String id) {
-        if(categoryService.deleteCategoryById(id) > 0) {
-            return ResponseEntity.ok("Entry " + id + " deleted.");
+    public ResponseEntity<Object> deleteCategoryById(@RequestParam String id) {
+        Long deletedCount = categoryService.deleteCategoryById(id);
+        if (deletedCount > 0) {
+            return ResponseEntity.ok("ID: " + id + "\n " + deletedCount + " entry found and deleted.");
         }
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.notFound().header("message", "Entry " + id + " does not exist.").build();
     }
-
 }

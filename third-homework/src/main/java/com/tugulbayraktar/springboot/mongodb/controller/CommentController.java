@@ -1,7 +1,7 @@
 package com.tugulbayraktar.springboot.mongodb.controller;
 
-import com.tugulbayraktar.springboot.mongodb.dto.UserDto;
-import com.tugulbayraktar.springboot.mongodb.service.UserService;
+import com.tugulbayraktar.springboot.mongodb.dto.CommentDto;
+import com.tugulbayraktar.springboot.mongodb.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,34 +11,34 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users/")
-public class UserController {
+@RequestMapping("/api/comments/")
+public class CommentController {
 
     @Autowired
-    UserService userService;
+    CommentService commentService;
 
     @GetMapping
-    public List<UserDto> findAll () {
-        return userService.findAll();
+    public List<CommentDto> findAll() {
+        return commentService.findAll();
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Object> findById(@PathVariable String id) {
-        UserDto userDto = userService.findById(id);
-        if(userDto != null) {
-            return ResponseEntity.ok(userDto);
+    public ResponseEntity<Object> findCommentById (@PathVariable String id) {
+        CommentDto commentDto = commentService.findCommentById(id);
+        if(commentDto != null) {
+            ResponseEntity.ok(commentDto);
         }
-        return ResponseEntity.noContent().header("message", id + " Not found.").build();
+        return ResponseEntity.noContent().header("message", id + "Not found.").build();
     }
 
     @PostMapping
-    public ResponseEntity<Object> saveUser(@RequestBody UserDto userDto){
-        userDto = userService.saveUser(userDto);
-        if(userDto != null) {
+    public ResponseEntity<Object> saveComment(@RequestBody CommentDto commentDto) {
+        CommentDto savedComment = commentService.saveComment(commentDto);
+        if(savedComment != null) {
             URI uri = ServletUriComponentsBuilder
                     .fromCurrentRequest()
                     .path("{id}")
-                    .buildAndExpand(userDto.getId())
+                    .buildAndExpand(savedComment.getId())
                     .toUri();
             return ResponseEntity.created(uri).build();
         }
@@ -46,13 +46,13 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<Object> updateUser(@RequestBody UserDto userDto) {
-        userDto = userService.updateUser(userDto);
-        if(userDto != null) {
+    public ResponseEntity<Object> updateComment(@RequestBody CommentDto commentDto) {
+        CommentDto updatedComment = commentService.updateComment(commentDto);
+        if(updatedComment != null) {
             URI uri = ServletUriComponentsBuilder
                     .fromCurrentRequest()
                     .path("{id}")
-                    .buildAndExpand(userDto.getId())
+                    .buildAndExpand(updatedComment.getId())
                     .toUri();
             return ResponseEntity.created(uri).build();
         }
@@ -60,8 +60,8 @@ public class UserController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Object> deleteUserById(@RequestParam String id){
-    Long deletedCount = userService.deleteUserById(id);
+    public ResponseEntity<Object> deleteCommentById(@RequestParam String id) {
+        Long deletedCount = commentService.deleteCommentById(id);
         if(deletedCount > 0) {
             return ResponseEntity.ok("ID: " + id + "\n " + deletedCount + " entry found and deleted.");
         }

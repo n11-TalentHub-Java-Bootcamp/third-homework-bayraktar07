@@ -1,20 +1,16 @@
-package com.tugulbayraktar.springboot.mongodb.entity;
+package com.tugulbayraktar.springboot.mongodb.dto;
 
+import javax.validation.constraints.Size;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+public class CommentDto {
 
-import javax.persistence.Id;
-
-@Document(collection = "comment")
-public class Comment {
-
-    @Id
     private String id;
 
+    @Size(max = 500)
     private String comment;
+    private String commentDate;
     private String userId;
     private String productId;
-    private String commentDate;
 
     public String getId() {
         return id;
@@ -32,6 +28,14 @@ public class Comment {
         this.comment = comment;
     }
 
+    public String getCommentDate() {
+        return commentDate;
+    }
+
+    public void setCommentDate(String commentDate) {
+        this.commentDate = commentDate;
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -46,13 +50,5 @@ public class Comment {
 
     public void setProductId(String productId) {
         this.productId = productId;
-    }
-
-    public String getComment_date() {
-        return commentDate;
-    }
-
-    public void setComment_date(String commentDate) {
-        this.commentDate = commentDate;
     }
 }

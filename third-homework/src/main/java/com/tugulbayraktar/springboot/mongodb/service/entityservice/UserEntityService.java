@@ -23,18 +23,18 @@ public class UserEntityService {
 
     public UserDto findUserById(String id) {
         Optional<Users> userOptional = usersRepository.findById(id);
-        return userOptional.map(UserConverter.INSTANCE::convertUserToUserDto).orElse(null);
+        return userOptional.map(UserConverter.INSTANCE::convertUsersToUserDto).orElse(null);
     }
 
     public Long deleteUserById (String id) {
-        return usersRepository.deleteProductById(id);
+        return usersRepository.deleteUserById(id);
     }
 
     public Users saveUser(UserDto userDto) {
-        return usersRepository.insert(UserConverter.INSTANCE.convertUserDtoToUser(userDto));
+        return usersRepository.insert(UserConverter.INSTANCE.convertUserDtoToUsers(userDto));
     }
 
     public Users updateUser(UserDto userDto){
-        return usersRepository.save(UserConverter.INSTANCE.convertUserDtoToUser(userDto));
+        return usersRepository.save(UserConverter.INSTANCE.convertUserDtoToUsers(userDto));
     }
 }

@@ -25,13 +25,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto insertUser(UserDto userDto) {
-        return UserConverter.INSTANCE.convertUserToUserDto(userEntityService.saveUser(userDto));
+    public UserDto saveUser(UserDto userDto) {
+        return UserConverter.INSTANCE.convertUsersToUserDto(userEntityService.saveUser(userDto));
     }
 
     @Override
     public UserDto updateUser(UserDto userDto) {
-        return UserConverter.INSTANCE.convertUserToUserDto(userEntityService.updateUser(userDto));
+        return UserConverter.INSTANCE.convertUsersToUserDto(userEntityService.updateUser(userDto));
     }
 
     @Override

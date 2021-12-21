@@ -12,7 +12,7 @@ public interface UserConverter {
     UserConverter INSTANCE = Mappers.getMapper(UserConverter.class);
 
 
-    Users convertUserDtoToUser(UserDto userDto);
+    Users convertUserDtoToUsers(UserDto userDto);
 
-    UserDto convertUserToUserDto(Users users);
+    UserDto convertUsersToUserDto(Users users);
 }

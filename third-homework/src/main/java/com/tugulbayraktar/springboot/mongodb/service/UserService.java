@@ -10,7 +10,7 @@ public interface UserService {
 
     UserDto findById(String id);
 
-    UserDto insertUser (UserDto userDto);
+    UserDto saveUser(UserDto userDto);
 
     UserDto updateUser (UserDto userDto);
 

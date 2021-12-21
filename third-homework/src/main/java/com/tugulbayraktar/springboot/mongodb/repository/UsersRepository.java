@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface UsersRepository extends MongoRepository<Users, String> {
 
 
-    Long deleteProductById(String id);
+    Long deleteUserById(String id);
 }
