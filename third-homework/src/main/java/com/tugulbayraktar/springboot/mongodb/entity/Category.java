@@ -1,8 +1,7 @@
 package com.tugulbayraktar.springboot.mongodb.entity;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.persistence.Id;
 
 @Document(collection = "Category")
 public class Category {
